@@ -2,7 +2,7 @@ $(function(){
     function getAll() {  
         console.log(new Date());     
         $.ajax({
-            url: 'http://localhost:3000/students',
+            url: 'http://localhost:3000/api/movies',
             type: 'GET',
             dataType: 'json',
             cache: false,
@@ -12,10 +12,18 @@ $(function(){
                 $('#list').append(list(data));
                 view(data[0]);
                 $('#list a').on('click', function(){
-                    getById($(this).attr('id'));
+                    getById($(this).data('id'));
                 });
-                $('#list .delete').on('click', function(){
-                    remove($(this).attr('id'));
+                $('button.insert').on('click', function(){
+                    $('#id').val('');
+                    $('#name').val('');
+                    $('#year').val('');            
+                });
+                $('button.update').on('click', function(){
+                    getById($(this).data('id'));
+                });
+                $('button.delete').on('click', function(){
+                    remove($(this).data('id'));
                 });
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -25,23 +33,22 @@ $(function(){
     }
 
     function list(data) {
-        var output = '<ul>';
+        var output = '';
         data.forEach(function(row,key){
-            output += '<li><a href="#" id="'+row.id+'">'+row.prijmeni+', '+row.jmeno+'</a> [<a href="#" id="'+row.id+'" class="delete">X</a>]</li>';
+            output += '<tr><td><a href="#" data-id="'+row.id+'">'+row.name+'</a></td><td>'+row.year+'</td><td><button data-id="'+row.id+'" class="delete btn btn-danger">Smazat</button></td></tr>';
         });
-        output += '</ul>';
         return output;
     }
 
     function getById(id) {
         $.ajax({
-            url: 'http://localhost:3000/students/'+id,
+            url: 'http://localhost:3000/api/movies/'+id,
             type: 'GET',
             dataType: 'json',
             success: function (data, textStatus, xhr) {
                 console.log(data);                
-                var student = data[0];
-                view(student);
+                var movie = data;
+                view(movie);
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.log('Error in Operation');
@@ -49,18 +56,15 @@ $(function(){
         });                
     }
 
-    function view(student) {
-        $('#view').html('');
-        $('#view').append('<h4>'+student.jmeno+' '+student.prijmeni+'</h4>');
-        $('#view').append('<p>Narozen/a: <b>'+student.narozeni+'</b></p>');
-        $('#view').append('<p>Absence: <b>'+ (student.absence == null ? '---' : student.absence) +'</b></p>');
-        $('#view').append('<p>Průměrný prospěch: <b>'+ (student.prospech == null ? '---' : student.prospech) +'</b></p>');
-        $('#view').append('<p>Poznámka: <b>'+ (student.poznamka == null ? '---' : student.poznamka) +'</b></p>');
+    function view(movie) {
+        $('#id').val(movie.id);
+        $('#name').val(movie.name);
+        $('#year').val(movie.year);
     }
 
     function remove(id) {
         $.ajax({
-            url: 'http://localhost:3000/students/'+id,
+            url: 'http://localhost:3000/api/movies/'+id,
             type: 'DELETE',
             dataType: 'json',
             success: function (data, textStatus, xhr) {
@@ -72,6 +76,52 @@ $(function(){
             }
         });                        
     }
+
+    function insert(data) {
+        $.ajax({
+            url: 'http://localhost:3000/api/movies',
+            type: 'POST',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, textStatus, xhr) {
+                console.log(data); 
+                getAll();                           
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+            }
+        });                        
+    }
+
+    function update(id, data) {
+        $.ajax({
+            url: 'http://localhost:3000/api/movies/'+id,
+            type: 'PUT',
+            data: data,
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function (data, textStatus, xhr) {
+                console.log(data); 
+                getAll();                           
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.log('Error in Operation');
+            }
+        });                        
+    }
+
+    $('#submit').on('click', function(){
+        var json = {};
+        json.name = $('#name').val();
+        json.year = $('#year').val();
+        var data = JSON.stringify(json);
+        if ( $('#id').val() ) {
+            update($('#id').val(), data);
+        } else {
+            insert(data);
+        }
+    });
     
     getAll();
 })
