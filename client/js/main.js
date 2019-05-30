@@ -11,7 +11,6 @@ $(function(){
                 console.log(textStatus);
                 $('#list').html('');
                 $('#list').append(list(data));
-                view(data[0]);
                 $('#list a').on('click', function(){
                     $('#modelId').modal('show');
                     getById($(this).data('id'));
@@ -48,18 +47,14 @@ $(function(){
             success: function (data, textStatus, xhr) {
                 console.log(data);                
                 var movie = data;
-                view(movie);
+                $('#id').val(movie.id);
+                $('#name').val(movie.name);
+                $('#year').val(movie.year);
             },
             error: function (xhr, textStatus, errorThrown) {
                 console.log('Error in Operation');
             }
         });                
-    }
-
-    function view(movie) {
-        $('#id').val(movie.id);
-        $('#name').val(movie.name);
-        $('#year').val(movie.year);
     }
 
     function remove(id) {
