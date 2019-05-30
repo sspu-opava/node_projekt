@@ -33,17 +33,31 @@
 
                         </tbody>
                     </table>
-                    <div><button class="insert btn btn-success">Nový záznam</button></div>
+                    <div><button class="insert btn btn-success" data-toggle="modal" data-target="#modelId">Nový záznam</button></div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <h2>Karta filmu</h2>
-                <div class="container">
+        </div>
+    </main>
+
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                    <div class="modal-header">
+                            <h5 class="modal-title">Karta filmu</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                        </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
                         <form>
-                            <div class="form-group row">
+                            <div class="form-group row d-none">
                                 <label for="name" class="col-sm-3 col-form-label">ID</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" name="id" id="id">
+                                    <input type="hidden" class="form-control" name="id" id="id">
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -58,19 +72,17 @@
                                     <input type="text" class="form-control" name="year" id="year">
                                 </div>
                             </div>
-                            <div class="form-group row">
-                                <div class="offset-sm-3 col-sm-9">
-                                    <button type="button" class="btn btn-primary" id="submit">Potvrdit</button>
-                                    <button type="button" class="btn btn-primary" id="update">Storno</button>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="submit" data-dismiss="modal">Potvrdit</button>
+                    <button type="button" class="btn btn-primary" id="update" data-dismiss="modal">Storno</button>
+                </div>
+            </div>
         </div>
-    </main>
-
-
+    </div>
+    
     <footer class="container-fluid">
         <hr>
         <p>&copy; 2019 - IT2 - PVY</p>

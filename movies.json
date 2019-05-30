@@ -1,32 +1,27 @@
 [
   {
     "id": 1,
-    "name": "Kill Bill",
+    "name": "Kill Billeka",
     "year": "2003"
   },
   {
     "id": 2,
     "name": "Kill Bill 2",
-    "year": 2004
+    "year": "2006"
   },
   {
     "id": 3,
     "name": "Star Wars IV",
-    "year": 1976
+    "year": "1976"
   },
   {
     "id": 4,
     "name": "Star Wars V",
-    "year": "1982"
+    "year": "1983"
   },
   {
     "id": 5,
     "name": "Vetřelec",
-    "year": "1978"
-  },
-  {
-    "id": 6,
-    "name": "Vetřelec 2",
-    "year": 1984
+    "year": "1979"
   }
 ]

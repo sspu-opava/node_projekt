@@ -1,4 +1,5 @@
 $(function(){
+
     function getAll() {  
         console.log(new Date());     
         $.ajax({
@@ -12,6 +13,7 @@ $(function(){
                 $('#list').append(list(data));
                 view(data[0]);
                 $('#list a').on('click', function(){
+                    $('#modelId').modal('show');
                     getById($(this).data('id'));
                 });
                 $('button.insert').on('click', function(){
@@ -19,9 +21,7 @@ $(function(){
                     $('#name').val('');
                     $('#year').val('');            
                 });
-                $('button.update').on('click', function(){
-                    getById($(this).data('id'));
-                });
+
                 $('button.delete').on('click', function(){
                     remove($(this).data('id'));
                 });
